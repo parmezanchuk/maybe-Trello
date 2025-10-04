@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>iceberg - {{ task.name }}</title>
+    <link rel="stylesheet" href="{% static 'iceberg_app/default-styles.css' %}?v={{ timestamp }}">
+</head>
+
+<body class="blue-yellow-body">
+
+<div class="vertical-box">
+    <div class="central-panel" style="width:50%">
+
+        <h1>{{ task.title }}</h1>
+
+        <p><strong>Опис:</strong> {{ task.description}}</p>
+        <p><strong>Дедлайн:</strong> {{ task.deadline }}</p>
+        <p><strong>Складність:</strong> {{ task.difficulty }}</p>
+        <p><strong>Статус:</strong> {{ task.status }}</p>
+
+        <div class="buttons-row">
+            <form action="{% url 'workspace' workspace.id %}">
+                <button class="white-button">⬅ Назад</button>
+            </form>
+
+            {% if request.user == workspace.owner %}
+            <form action="{% url 'delete_task' task.id workspace.id %}">
+                <button class="white-button" style="color: darkred;">Видалити завдання</button>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

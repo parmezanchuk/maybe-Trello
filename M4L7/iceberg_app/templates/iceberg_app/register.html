@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iceberg - Register</title>
+    <link rel="stylesheet" href="{% static 'iceberg_app/default-styles.css' %}?v={ timestamp }">
+</head>
+
+
+
+<body class="blue-yellow-body">
+
+<div class="vertical-box">
+
+    <div class="central-panel">
+
+        <b><p style="font-size:30px">Вас вітає iceberg!</p></b>
+
+        <form method="post">
+            {% csrf_token %}
+
+            Ваш юзернейм:
+            {{ form.username }}
+
+            Пароль:
+            {{ form.password1 }}
+
+            Підтвердження паролю:
+            {{ form.password2 }}
+            <button type="submit" class="white-button" style="margin-top: 10px">Зареєструватися</button>
+        </form>
+
+        <i style="margin-top:5px; color: dimgray">Вже є аккаунт?</i>
+
+        <a href="/login" class="blue-a" style="margin-top: 4px">Залогінитися!</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

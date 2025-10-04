@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task</title>
+    <link rel="stylesheet" href="{% static 'iceberg_app/default-styles.css' %}?v={ timestamp }">
+</head>
+
+
+<body class="blue-yellow-body">
+
+<div class="vertical-box">
+
+    <form method="post" action="{% url 'create_task' board.id workspace.id %}">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">створити</button>
+
+    </form>
+
+
+</div>
+
+</body>
+</html>

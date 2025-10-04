@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>invite user</title>
+    <link rel="stylesheet" href="{% static 'iceberg_app/default-styles.css' %}?v={ timestamp }">
+</head>
+
+
+<body class="blue-yellow-body">
+
+<div class="vertical-box">
+
+    <div class="central-panel" style="height:35% !important">
+
+        <form method="post">
+
+            <b><p style="font-size:30px">Запросити Користувача</p></b>
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="white-button" style="margin-top: 10px">Запросити</button>
+
+        </form>
+
+
+        <a href="{% url 'workspace' workspace.id %}" class="blue-a" style="margin-top: 4px">Назад</a>
+
+    </div>
+
+</div>
+</body>
+</html>

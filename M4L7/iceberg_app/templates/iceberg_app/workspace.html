@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workspace {{ workspace.name }}</title>
+    <link rel="stylesheet" href="{% static 'iceberg_app/default-styles.css' %}?v={{ timestamp }}">
+</head>
+
+<body class="blue-pink-body" style="display:flex">
+
+    <div class="right-panel">
+
+        <h1>{{ workspace.name }}</h1>
+
+        {% if request.user == workspace.owner %}
+
+            <form action="{% url 'create_board' workspace.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="workspace_id" value="{{ workspace.id }}">
+                <button class="white-button" style="margin-top: 10px">Створити дошку</button>
+            </form>
+
+            <form action="{% url 'invite_creation' workspace.id %}">
+                <button class="white-button" hidden="hidden">Запросити учасника</button>
+            </form>
+
+            <form action="{% url 'delete_workspace' workspace.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="workspace_id" value="{{ workspace.id }}">
+                <button class="white-button" style="color:#a91717">Видалити Workspace</button>
+            </form>
+
+        {% endif %}
+
+        <form action="{% url 'home' %}">
+            <button class="white-button">⬅ Назад</button>
+        </form>
+
+        <b>Cписок учасників:</b>
+
+        {% for member in members %}
+            <b>{{ member }}</b>
+        {% endfor %}
+
+    </div>
+
+    {% if boards %}
+
+        <div class="board-grid">
+
+            {% for board in boards %}
+
+                <div class="board-item">
+
+                    <h1>{{ board.name }}</h1>
+
+                    <div class="task-grid">
+
+                        {% for task in board.tasks.all %}
+                            <div class="task-item">
+
+                                <strong style="margin-left:auto;margin-right:auto;">{{ task.title }}</strong>
+
+                                {{ task.description | truncatechars:50 }} <br>
+
+                                до: {{ task.deadline }}
+
+                                <a class="blue-a" href="{% url 'task_info' task.id workspace.id %}">Перейти</a>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% if request.user == workspace.owner %}
+
+                        <div class="buttons-row">
+
+                            <form action="{% url 'delete_board' board.id workspace.id %}">
+                                {% csrf_token %}
+                                <button class="round-button" style="color:#6e1313;">✖</button>
+                            </form>
+
+                            <form action="{% url 'create_task' board.id workspace.id %}">
+                                {% csrf_token %}
+                                <button class="round-button" style="font-size: 18px">+</button>
+                            </form>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <p style="margin-left: 20px">Поки немає жодної дошки(</p>
+
+    {% endif %}
+
+</body>

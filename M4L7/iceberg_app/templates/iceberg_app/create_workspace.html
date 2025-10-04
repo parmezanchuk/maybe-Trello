@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create WorkSpace</title>
+    <link rel="stylesheet" href="{% static 'iceberg_app/default-styles.css' %}?v={ timestamp }">
+</head>
+
+
+
+<body class="blue-white-body">
+
+<div class="vertical-box">
+
+    <div class="central-panel">
+
+        <b style="font-size: 30px">Створення</b>
+
+        <b style="font-size: 30px">Workspace</b>
+
+        <form method="post">
+            {% csrf_token %}
+
+            Введіть назву вашого workspace:
+            {{ form.name }}
+
+            <button type="submit" class="white-button" style="margin-top: 10px">Створити Workspace</button>
+        </form>
+
+
+        <a href="/home" class="blue-a" style="margin-top: 4px">Назад</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
